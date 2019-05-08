@@ -2,7 +2,7 @@ FROM centos:centos7
 
 RUN yum upgrade -y
 RUN yum update -y
-RUN yum install -y yum-utils gcc gcc-c++ git patch epel-release
+RUN yum install -y yum-utils gcc gcc-c++ git patch epel-release make curl xz file which
 
 RUN rpm -ivh http://packages.groonga.org/centos/groonga-release-latest.noarch.rpm
 RUN yum install -y perl-App-cpanminus
@@ -26,10 +26,10 @@ RUN make install
 
 WORKDIR /opt
 RUN git clone --depth 1 https://github.com/neologd/mecab-ipadic-neologd.git
-#WORKDIR /opt/mecab-ipadic-neologd
-#RUN ./bin/install-mecab-ipadic-neologd -n -y --eliminate-redundant-entry
+WORKDIR /opt/mecab-ipadic-neologd
+RUN ./bin/install-mecab-ipadic-neologd -n -y --eliminate-redundant-entry
 
-#RUN zip -r mecab-service/neologd.zip neologd
-#RUN zip -r ~/mecab-service.zip mecab-service
+WORKDIR /opt
+RUN zip -r neologd.zip neologd
 
 CMD /bin/bash
